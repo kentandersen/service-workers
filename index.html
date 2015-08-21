@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Service Workers</title>
+    <link rel="stylesheet" href="node_modules/remark-bekk/dist/bekk.css">
+  </head>
+  <body class="bekk-black">
+    <textarea id="source">
+
+class: front-page
+
+# Hvor er Service Workers
+
+## Fagdag 2015
+
+Kent Andersen
+
+04/10/2015
+
+---
+
+class: fullscreen
+
+![](images/gammel-web.png)
+
+???
+Linke vilkårlig mellom artikkler, ikke ulikt wikipedia
+
+
+
+---
+
+class: fullscreen
+
+![](images/jesus-web.jpg)
+
+
+---
+
+class: fullscreen
+
+![](images/2-0-web.jpg)
+
+---
+
+class: fullscreen
+
+![](images/youtube.png)
+
+???
+
+begynner å få web applikasjoner
+
+
+---
+
+class: fullscreen
+
+![](images/netflix.png)
+
+???
+
+begynner å få web applikasjoner
+
+---
+
+class: center middle
+![](images/web-is-dead.jpg)
+
+.source[Wired Magazine, August 2010]
+
+---
+
+class: middle
+
+  <blockquote style="font-size: 2em">
+    As much as we love the open, unfettered Web, we’re abandoning it for simpler, sleeker services that just work.
+  </blockquote>
+
+  <div style="display: block; text-align: right">Chris Anderson</div>
+
+.source[http://www.wired.com/2010/08/ff_webrip/]
+
+---
+
+class: center middle
+![](images/web-trends.jpg)
+
+.source[http://www.wired.com/2010/08/ff_webrip/]
+
+---
+
+class: fullscreen
+![](images/mobile-apps.png)
+
+
+---
+
+class: center middle split
+![](images/flickr-app.png)
+
+# Last meg ned!
+## jeg er såååååå mye bedre enn web
+
+.source[http://idontwantyourfuckingapp.tumblr.com/]
+
+---
+
+class: middle split
+![](images/flickr-app.png)
+
+* Offline-støtte
+* Background synkronisering
+* Push Notification
+* Ytelse
+* OS-integrasjon
+
+.source[http://idontwantyourfuckingapp.tumblr.com/]
+
+---
+
+class: middle split
+![](images/flickr-app.png)
+
+* <span style="color: #FD5158">Offline-støtte</span>
+* <span style="color: #FD5158">Background synkronisering</span>
+* <span style="color: #FD5158">Push Notification</span>
+* Ytelse
+* OS-integrasjon
+
+.source[http://idontwantyourfuckingapp.tumblr.com/]
+
+---
+
+
+class: fullscreen
+<iframe src="http://www.w3.org/TR/service-workers/" />
+
+---
+
+# Bygger på kjente venner
+
+* Web workers
+* Fetch
+* Promises
+* Post message
+
+---
+class: middle center
+
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">ServiceWorker is *the* thing that makes true standalone mobile web apps viable as A Thing™.&#10;&#10;People don&#39;t yet seem to realize this.</p>&mdash; Henrik Joreteg (@HenrikJoreteg) <a href="https://twitter.com/HenrikJoreteg/status/632385847308890112">August 15, 2015</a></blockquote>
+
+---
+
+class: middle
+
+
+  <blockquote style="font-size: 2em">
+    Using ServiceWorker you can hijack connections, respond differently, & filter responses. Powerful stuff. While you would use these powers for good, a man-in-the-middle might not»
+
+  </blockquote>
+
+.source[https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md#https-only-you-say]
+
+---
+
+# Registrer en ny worker
+```
+  navigator.serviceWorker.register("/service-worker.js")
+```
+
+???
+enkel feature detection gjør at du kan ta i bruk service workers som en progressive enhancement
+
+--
+```
+   .then(function(serviceWorker) { 
+    console.log("ಠ‿ಠ", serviceWorker);
+     })
+  .catch(function(error) { 
+    console.log("ಠ_ಠ", error); 
+  });
+```
+
+
+
+---
+
+class: center middle
+
+![](images/save-to-homescreen.png)
+
+
+---
+# Inne i service-worker.js
+
+```
+  this.addEventListener("install", function(event) { 
+
+   });
+```
+
+---
+
+# Inne i service-worker.js
+
+```
+  this.addEventListener("install", function(event) { 
+    event.waitUntil();
+   });
+```
+
+---
+
+# Inne i service-worker.js
+
+```
+  this.addEventListener("install", function(event) { 
+    event.waitUntil(promise);
+   });
+```
+
+---
+
+# Inne i service-worker.js
+
+```
+  this.addEventListener("install", function(event) { 
+    event.waitUntil(
+       caches.open("myapp-static-v1")
+    )
+   });
+```
+
+---
+
+# Inne i service-worker.js
+
+```
+  this.addEventListener("install", function(event) { 
+    event.waitUntil(
+       caches.open("myapp-static-v1")
+      .then(function(cache) {
+        return cache.addAll([ 
+          "/all.css", 
+          "/all.js"
+        ]); 
+      })
+    )
+   });
+```
+
+???
+Hvis en ressurs feiler, feiler install og service workeren starter ikke
+
+---
+
+# Inne i service-worker.js
+
+```
+  this.addEventListener("fetch", function(event) { 
+    event.respondWith(); 
+  });
+```
+
+???
+respondere med noe annet
+
+---
+
+# Inne i service-worker.js
+
+```
+  this.addEventListener("fetch", function(event) { 
+    event.respondWith(
+      caches.match(event.request)
+      .then(function(response) {
+        return response; 
+      }) 
+    ); 
+  });
+```
+
+???
+"match" matcher på url og protokoll
+hvis ingen match er funnet blir response null og vi henter manuellt
+
+---
+
+# Inne i service-worker.js
+
+```
+  this.addEventListener("fetch", function(event) { 
+    event.respondWith(
+      caches.match(event.request)
+      .then(function(response) {
+        return response || fetch(event.request); 
+      }) 
+    ); 
+  });
+```
+
+---
+
+# service-worker.js
+
+```
+  var hitCounter = 0;
+
+  this.addEventListener("fetch", function(event) { 
+    hitCounter++; 
+    event.respondWith( 
+      new Response("Hit number " + hitCounter) 
+    );
+ });
+
+```
+--
+
+
+Hit number 1
+
+--
+
+Hit number 2
+
+--
+
+Hit number 3
+
+--
+
+Hit number 0
+
+
+???
+for å spare minne kan en worker spinnes opp og ned som browseren vil
+
+---
+
+# service-worker.js
+
+```
+  this.addEventListener("push", function(event) { 
+    if(event.message.data === "new-message") { 
+      event.waitUntil(
+        updateMessageCache().then(function(){ 
+          new Notification("You got a new message", {
+            body: "this is awsome!", 
+            tag: "message" 
+          }); 
+        })
+      );
+    }
+ });
+```
+
+???
+* "new-message" er noe jeg sender med push meldingen
+* updateMessageCache() laster nye melding og legger de i cachen til appen startes opp
+* gjør at appen har ny data når den lastes neste gang, uavhengig om du har internett
+
+---
+
+class: fullscreen
+
+<iframe src="https://jakearchibald.github.io/isserviceworkerready/" />
+
+
+---
+
+# Les Mer
+
+* [W3C Working Draft](http://www.w3.org/TR/service-workers/)
+* [Is service worker ready, ](https://jakearchibald.github.io/isserviceworkerready/)
+* [Jake Archibald "The ServiceWorker is coming, look busy", JSConf EU 2014](https://www.youtube.com/watch?v=SmZ9XcTpMS4)
+* [ServiceWorkers Explained](https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md)
+* [Service Worker, Chromium resource](http://www.chromium.org/blink/serviceworker)
+* [API reference](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Social_API/Service_worker_API_reference)
+
+
+    </textarea>
+    <script src="node_modules/remark-bekk/vendor/remark-0.11.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        ratio: '16:9',
+        highlightLanguage: 'javascript',
+        highlightStyle: 'monokai',
+        navigation: {
+          scroll: false
+        }
+      });
+    </script>
+
+    <style type="text/css">
+      .split {
+        padding-right: 50%;
+      }
+      .split img {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        max-height: none !important;
+      }
+
+      [id^=twitter-widget-] {
+        display: inline-block !important;
+        transform: scale(2);
+      }
+    </style>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </body>
+</html>
+

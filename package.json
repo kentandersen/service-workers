@@ -1,0 +1,18 @@
+{
+  "name": "service-workers",
+  "version": "1.0.0",
+  "description": "service-workers lyntale",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kentandersen/service-workers.git"
+  },
+  "author": "Kent Andersen <kentareandersen@gmail.com>",
+  "license": "BEKK",
+  "bugs": {
+    "url": "https://github.com/kentandersen/es6-foredrag/issues"
+  },
+  "homepage": "https://github.com/kentandersen/es6-foredrag",
+  "dependencies": {
+    "remark-bekk": "bekk/remark"
+  }
+}

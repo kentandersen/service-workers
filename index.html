@@ -509,6 +509,33 @@ class: center middle bekk-top
 
 [github.com/kentandersen/service-workers](https://github.com/kentandersen/service-workers)
 
+---
+
+```
+  // Dependencies
+  var Cobol = require("cobol");
+
+  // Execute some COBOL snippets
+  Cobol(function () { /*
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. HELLO.
+       ENVIRONMENT DIVISION.
+       DATA DIVISION.
+       PROCEDURE DIVISION.
+
+       PROGRAM-BEGIN.
+           DISPLAY "Hello world".
+
+       PROGRAM-DONE.
+           STOP RUN.
+  */ }, function (err, data) {
+    console.log(err || data); // Hello world
+  });
+```
+
+.source[https://github.com/IonicaBizau/node-cobol/]
+
+
     </textarea>
     <script src="node_modules/remark-bekk/vendor/remark-0.11.0.min.js" type="text/javascript"></script>
     <script type="text/javascript">

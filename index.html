@@ -10,7 +10,7 @@
 
 class: front-page
 
-# Hvor er Service Workers
+# Hvor er Service Workers?
 
 ## Fagdag 2015
 
@@ -35,12 +35,17 @@ class: fullscreen
 
 ![](images/jesus-web.jpg)
 
+???
+Microsoft langserte Frontpage, og fikk en haug med relativt vellykket design
 
 ---
 
 class: fullscreen
 
 ![](images/2-0-web.jpg)
+
+???
+Design kommer i fokus
 
 ---
 
@@ -50,8 +55,7 @@ class: fullscreen
 
 ???
 
-begynner å få web applikasjoner
-
+begynner å få første web-applikasjoner
 
 ---
 
@@ -61,7 +65,7 @@ class: fullscreen
 
 ???
 
-begynner å få web applikasjoner
+Til det full feature web-app miljøet vi har i dag
 
 ---
 
@@ -125,11 +129,14 @@ class: middle split
 
 * <span style="color: #FD5158">Offline-støtte</span>
 * <span style="color: #FD5158">Push Notification</span>
-* Background synkronisering
+* <span style="color: #FD5158">Background synkronisering</span>
 * Ytelse
 * OS-integrasjon
 
 .source[http://idontwantyourfuckingapp.tumblr.com/]
+
+???
+Vi skal snakke om de to første
 
 ---
 
@@ -153,23 +160,6 @@ class: middle center
 
 ---
 
-class: middle
-
-
-  <blockquote style="font-size: 2em">
-    Using ServiceWorker you can hijack connections, respond differently, & filter responses. Powerful stuff. While you would use these powers for good, a man-in-the-middle might not»
-
-  </blockquote>
-
-.source[https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md#https-only-you-say]
-
-???
-localhost er fritatt fra denne reglen
-
----
-class: middle
-
-
 <img src="images/bekk-no.png" style="height:200px;border:2px solid rgba(253, 81, 88, 0.8);position:absolute;top:50%;left:4em;margin-top:-101px"/>
 
 <img src="images/server.svg" style="position:absolute;top:50%;right:4em;margin-top:-125px;height:250px"/>
@@ -181,6 +171,19 @@ class: middle
 --
 
 <img src="images/cache.svg" style="position:absolute;top:80%;left:50%;margin-top:-60px;margin-left:-60px;height:120px;height:120px"/>
+
+---
+
+class: middle
+
+  <blockquote style="font-size: 2em">
+    Using ServiceWorker you can hijack connections, respond differently, & filter responses. Powerful stuff. While you would use these powers for good, a man-in-the-middle might not»
+  </blockquote>
+
+.source[https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md#https-only-you-say]
+
+???
+localhost er fritatt fra denne reglen
 
 ---
 
@@ -357,11 +360,9 @@ respondere med noe annet
   });
 ```
 ???
-IMPORTANT: Clone the response. A response is a stream
-and because we want the browser to consume the response
-as well as the cache consuming the response, we need
-to clone it so we have 2 stream.
-
+* Legg merke til at vi kloner
+* responsen er en stream
+* den skal både legges i cache og brukes av browseren
 
 ---
 

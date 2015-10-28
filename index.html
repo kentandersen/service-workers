@@ -147,11 +147,78 @@ class: fullscreen
 ---
 
 # Bygger på kjente venner
+--
 
-* Web workers
-* Fetch
-* Promises
-* Post message
+## Web workers
+
+```
+  var worker = new Worker("do-some-work.js");
+```
+
+???
+kode som kjører i egen tråde
+
+--
+
+## Post message
+
+```
+  worker.addEventListener("message", function(event) {
+    document.body.textContent = event.data;
+  }, false);
+```
+
+--
+
+## Fetch
+
+```
+  fetch("/api/items").then(function(response) {
+    return response.json();
+  });
+```
+---
+# Bygger på kjente venner
+
+## Promises
+
+```
+  new Promise(function(resolve, reject) {
+    // Gjør noe spennende.
+    // kall resolve hvis alt gikk bra
+    // kall rejecte hvis noe feilet
+  });
+```
+
+---
+
+# Bygger på kjente venner
+
+## Promises
+
+```
+  function hentTall() {
+    return new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        var tall = Math.random();
+        tall > 0.5 ? resolve(tall) : reject(tall);
+      }, 1000);
+    });
+  }
+```
+
+???
+Hent et tilfelldig tall om 1. sekund, reject om det er under 0,5
+
+--
+
+```
+  hentTall().then(function() {
+    // alt er bra
+  }).catch(function() {
+    // ting er ikke så bra
+  });
+```
 
 ---
 class: middle center
@@ -177,13 +244,37 @@ class: middle center
 class: middle
 
   <blockquote style="font-size: 2em">
-    Using ServiceWorker you can hijack connections, respond differently, & filter responses. Powerful stuff. While you would use these powers for good, a man-in-the-middle might not»
+    «Using ServiceWorker you can hijack connections, respond differently, & filter responses. Powerful stuff»
   </blockquote>
 
 .source[https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md#https-only-you-say]
 
 ???
 localhost er fritatt fra denne reglen
+
+---
+class: split
+
+  # Trained to thrill
+
+  * index.html
+  * all.css
+  * page.js
+  * flicker.json
+  * [bilde av tog].jpg
+  * [bilde av tog].jpg
+  * [bilde av tog].jpg
+  * [bilde av tog].jpg
+  * [bilde av tog].jpg
+  * [bilde av tog].jpg
+  * [bilde av tog].jpg
+  * [bilde av tog].jpg
+
+
+
+  .source[https://jakearchibald.github.io/trained-to-thrill/]
+
+  <iframe src="https://jakearchibald.github.io/trained-to-thrill/" style="width: 40%"/>
 
 ---
 
@@ -256,6 +347,7 @@ enkel feature detection gjør at du kan ta i bruk service workers som en progres
        caches.open("myapp-static-v1")
       .then(function(cache) {
         return cache.addAll([ 
+          "/index.html", 
           "/all.css", 
           "/page.js"
         ]); 
@@ -272,7 +364,7 @@ class: split
 
   # Trained to thrill
 
-  * html
+  * ~~index.html~~
   * ~~all.css~~
   * ~~page.js~~
   * flicker.json
@@ -370,7 +462,7 @@ class: split
 
   # Trained to thrill
 
-  * html
+  * ~~index.html~~
   * ~~all.css~~
   * ~~page.js~~
   * ~~flicker.json~~
@@ -448,7 +540,7 @@ class: split
 
 ---
 
-# Minnehåndtering
+# Worker life cycle
 
 ```
   var hitCounter = 0;
@@ -458,7 +550,7 @@ class: split
     event.respondWith( 
       new Response("Hit number " + hitCounter) 
     );
- });
+   });
 
 ```
 --
@@ -537,7 +629,7 @@ class: center middle bekk-top
 
 
     </textarea>
-    <script src="node_modules/remark-bekk/vendor/remark-0.11.0.min.js" type="text/javascript"></script>
+    <script src="node_modules/remark-bekk/vendor/remark.min.js" type="text/javascript"></script>
     <script type="text/javascript">
       var slideshow = remark.create({
         ratio: '16:9',

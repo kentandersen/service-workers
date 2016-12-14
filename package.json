@@ -11,8 +11,5 @@
   "bugs": {
     "url": "https://github.com/kentandersen/es6-foredrag/issues"
   },
-  "homepage": "https://github.com/kentandersen/es6-foredrag",
-  "dependencies": {
-    "remark-bekk": "bekk/remark"
-  }
+  "homepage": "https://github.com/kentandersen/es6-foredrag"
 }

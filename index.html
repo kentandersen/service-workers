@@ -173,7 +173,10 @@ kode som kjører i egen tråde
 ## Fetch
 
 ```
-  fetch("/api/items").then(function(response) {
+  fetch("/api/items", {
+    method: "post",
+    body: JSON.stringify({ some: "data" })
+  }).then(function(response) {
     return response.json();
   });
 ```
@@ -244,7 +247,7 @@ class: middle center
 class: middle
 
   <blockquote style="font-size: 2em">
-    «Using ServiceWorker you can hijack connections, respond differently, & filter responses. Powerful stuff»
+    Using ServiceWorker you can hijack connections, respond differently, & filter responses. Powerful stuff
   </blockquote>
 
 .source[https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md#https-only-you-say]
@@ -290,7 +293,7 @@ enkel feature detection gjør at du kan ta i bruk service workers som en progres
 ```
    .then(function(serviceWorker) { 
     console.log("ಠ‿ಠ", serviceWorker);
-     })
+   })
   .catch(function(error) { 
     console.log("ಠ_ಠ", error); 
   });
@@ -512,8 +515,7 @@ class: split
   this.addEventListener("push", function(event) { 
     if(event.message.data === "new-message") { 
       event.waitUntil(
-        updateMessageCache().then(); 
-        })
+        updateMessageCache().then()
       );
     }
    });
@@ -592,6 +594,7 @@ class: fullscreen
 * [ServiceWorkers Explained](https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md)
 * [Service Worker, Chromium resource](http://www.chromium.org/blink/serviceworker)
 * [API reference](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Social_API/Service_worker_API_reference)
+* [Using ServiceWorker in Chrome today](https://jakearchibald.com/2014/using-serviceworker-today/)
 
 ---
 
